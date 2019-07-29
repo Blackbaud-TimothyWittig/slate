@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;csharp&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -211,10 +211,7 @@
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
+              <a href="#" data-language-name="csharp">csharp</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -225,19 +222,81 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+            <a href="#authorization" class="toc-h1 toc-link" data-title="Authorization">Authorization</a>
           </li>
           <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#payment-configurations" class="toc-h1 toc-link" data-title="Payment configurations">Payment configurations</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#get-single" class="toc-h2 toc-link" data-title="GET single">GET single</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
+                    <a href="#get-all" class="toc-h2 toc-link" data-title="GET all">GET all</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#models" class="toc-h1 toc-link" data-title="Models">Models</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#cardread" class="toc-h2 toc-link" data-title="CardRead">CardRead</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#serviceerror" class="toc-h2 toc-link" data-title="ServiceError">ServiceError</a>
+                  </li>
+                  <li>
+                    <a href="#publickeyread" class="toc-h2 toc-link" data-title="PublicKeyRead">PublicKeyRead</a>
+                  </li>
+                  <li>
+                    <a href="#checkouttransactionadd" class="toc-h2 toc-link" data-title="CheckoutTransactionAdd">CheckoutTransactionAdd</a>
+                  </li>
+                  <li>
+                    <a href="#transactionread" class="toc-h2 toc-link" data-title="TransactionRead">TransactionRead</a>
+                  </li>
+                  <li>
+                    <a href="#creditcardread" class="toc-h2 toc-link" data-title="CreditCardRead">CreditCardRead</a>
+                  </li>
+                  <li>
+                    <a href="#billinginforead" class="toc-h2 toc-link" data-title="BillingInfoRead">BillingInfoRead</a>
+                  </li>
+                  <li>
+                    <a href="#fraudresultread" class="toc-h2 toc-link" data-title="FraudResultRead">FraudResultRead</a>
+                  </li>
+                  <li>
+                    <a href="#paymentconfigurationread" class="toc-h2 toc-link" data-title="PaymentConfigurationRead">PaymentConfigurationRead</a>
+                  </li>
+                  <li>
+                    <a href="#paymentconfigurationlistread" class="toc-h2 toc-link" data-title="PaymentConfigurationListRead">PaymentConfigurationListRead</a>
+                  </li>
+                  <li>
+                    <a href="#refundadd" class="toc-h2 toc-link" data-title="RefundAdd">RefundAdd</a>
+                  </li>
+                  <li>
+                    <a href="#directdebitaccounttokenadd" class="toc-h2 toc-link" data-title="DirectDebitAccountTokenAdd">DirectDebitAccountTokenAdd</a>
+                  </li>
+                  <li>
+                    <a href="#directdebitaccountinfo" class="toc-h2 toc-link" data-title="DirectDebitAccountInfo">DirectDebitAccountInfo</a>
+                  </li>
+                  <li>
+                    <a href="#directdebitaccounttokenread" class="toc-h2 toc-link" data-title="DirectDebitAccountTokenRead">DirectDebitAccountTokenRead</a>
+                  </li>
+                  <li>
+                    <a href="#cardtokenadd" class="toc-h2 toc-link" data-title="CardTokenAdd">CardTokenAdd</a>
+                  </li>
+                  <li>
+                    <a href="#cardtokenread" class="toc-h2 toc-link" data-title="CardTokenRead">CardTokenRead</a>
+                  </li>
+                  <li>
+                    <a href="#transactionadd" class="toc-h2 toc-link" data-title="TransactionAdd">TransactionAdd</a>
+                  </li>
+                  <li>
+                    <a href="#creditcardadd" class="toc-h2 toc-link" data-title="CreditCardAdd">CreditCardAdd</a>
+                  </li>
+                  <li>
+                    <a href="#cardpresentdata" class="toc-h2 toc-link" data-title="CardPresentData">CardPresentData</a>
+                  </li>
+                  <li>
+                    <a href="#billinginfoadd" class="toc-h2 toc-link" data-title="BillingInfoAdd">BillingInfoAdd</a>
                   </li>
               </ul>
           </li>
@@ -254,182 +313,1047 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
-
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
+<p>Wow, here&#39;s an intro the Payments API! It&#39;s pretty great and you should definitely use it. However, there&#39;s some set up you&#39;ll need to do first to prove you aren&#39;t a terrorist organization!</p>
+<h1 id='authorization'>Authorization</h1>
+<p>I should talk about OAuth 2 here and maybe some code here too.</p>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+Leaving this <code>aside</code> in here so I know how to do it.
 </aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h1 id='payment-configurations'>Payment configurations</h1><h2 id='get-single'>GET single</h2>
+<p><code>/v1/paymentconfigurations/{payment_configuration_id}</code></p>
+<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">paymentConfigurationId</span> <span class="p">=</span> <span class="s">"specific id goes here!"</span><span class="p">;</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://api.sky.blackbaud.com/payments/v1/paymentconfigurations/{paymentConfigurationId}"</span><span class="p">;</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="nf">BuildSkyApiAuthenticationHeader</span><span class="p">();</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Bb-Api-Subscription-Key"</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">.</span><span class="n">SubscriptionKey</span><span class="p">);</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre><h3 id='description'>Description:</h3>
+<p>Returns information about a payment configuration.</p>
+<h3 id='parameters'>Parameters</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
-<th>Default</th>
+<th>Name</th>
+<th>Located in</th>
 <th>Description</th>
+<th>Required</th>
+<th>Schema</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>payment_configuration_id</td>
+<td>path</td>
+<td>The identifier for the payment configuration.</td>
+<td>Yes</td>
+<td>string (uuid)</td>
 </tr>
 </tbody></table>
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
+<h3 id='responses'>Responses</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Code</th>
 <th>Description</th>
+<th>Schema</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>200</td>
+<td>Returned when the operation is successful. The response body contains payment configuration details.</td>
+<td><a href="#paymentconfigurationread">PaymentConfigurationRead</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td>Returned when the request body is not in the appropriate format.</td>
+<td>[ <a href="#serviceerror">ServiceError</a> ]</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Returned when the specified payment configuration is not found.</td>
+<td>[ <a href="#serviceerror">ServiceError</a> ]</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='get-all'>GET all</h2>
+<p><code>/v1/paymentconfigurations</code></p>
+<pre class="highlight csharp tab-csharp"><code><span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="s">"https://api.sky.blackbaud.com/payments/v1/paymentconfigurations"</span><span class="p">;</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="nf">BuildSkyApiAuthenticationHeader</span><span class="p">();</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Bb-Api-Subscription-Key"</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">.</span><span class="n">SubscriptionKey</span><span class="p">);</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre><h3 id='summary'>Summary:</h3>
+<p>Payment configuration list</p>
+<h3 id='description-2'>Description:</h3>
+<p>Returns a set of payment configurations.</p>
+<h3 id='parameters-2'>Parameters</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Name</th>
+<th>Located in</th>
 <th>Description</th>
+<th>Required</th>
+<th>Schema</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>include_inactive</td>
+<td>query</td>
+<td>True to include payment configurations whose status is inactive.</td>
+<td>No</td>
+<td>boolean</td>
+</tr>
+</tbody></table>
+<h3 id='responses-2'>Responses</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returned when the operation is successful. The response body contains a set of payment configurations.</td>
+<td><a href="#paymentconfigurationlistread">PaymentConfigurationListRead</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td>Returned when the request body is not in the appropriate format.</td>
+<td>[ <a href="#serviceerror">ServiceError</a> ]</td>
+</tr>
+</tbody></table>
+<h1 id='models'>Models</h1><h2 id='cardread'>CardRead</h2>
+<p>Represents a stored credit card.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>bank_identification_number</td>
+<td>string</td>
+<td>The first six of the account number for the stored credit card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>brand</td>
+<td>string</td>
+<td>The brand name of the stored credit card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>last_four</td>
+<td>string</td>
+<td>The last four of the account number for the stored credit card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>expiry_year</td>
+<td>integer</td>
+<td>The expiration year for the stored credit card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>expiry_month</td>
+<td>integer</td>
+<td>The expiration month for the stored credit card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>cardholder_name</td>
+<td>string</td>
+<td>The name of the account holder for the stored credit card.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='serviceerror'>ServiceError</h2>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>error_name</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>error_code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>raw_message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>error_args</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='publickeyread'>PublicKeyRead</h2>
+<p>Defines the data model for the Public Key endpoint response.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>public_key</td>
+<td>string (uuid)</td>
+<td>Gets the public key</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='checkouttransactionadd'>CheckoutTransactionAdd</h2>
+<p>Defines the data model for post checkout transaction request.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amount</td>
+<td>integer</td>
+<td>The amount to charge, used to validate that the authorized amount is the same as the amount being charged.  Measured in cents: 1000 = $10.00.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>authorization_token</td>
+<td>string (uuid)</td>
+<td>The authorization token of the transaction to charge.</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+<h2 id='transactionread'>TransactionRead</h2>
+<p>Represents a created transaction.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>token</td>
+<td>string (uuid)</td>
+<td>The stored token. Available only on creation of Transaction record.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string (uuid)</td>
+<td>The unique identifier of this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>integer</td>
+<td>The gross amount of this transaction. Measured in cents: 1000 = $10.00.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>string</td>
+<td>The transaction type of this transaction.  Possible values are CardNotPresent, CardPresent, TransactionBatch, OfflineBatch, Refund, RefundBatch, ChargeBack, ReverseChargeback, or FraudManagement.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>credit_card</td>
+<td><a href="#creditcardread">CreditCardRead</a></td>
+<td>The information of the credit card for this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>additional_fee</td>
+<td>integer</td>
+<td>The additional fee amount for this transaction.  Measured in cents: 1000 = $10.00.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>string</td>
+<td>The 3 char ISO4217 currency code used for this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>application</td>
+<td>string</td>
+<td>The calling Application of this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>comment</td>
+<td>string</td>
+<td>The comment on this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>transaction_date</td>
+<td>string</td>
+<td>The date and time of this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>donor_ip_address</td>
+<td>string</td>
+<td>The IP address where this transaction originated.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>email_address</td>
+<td>string</td>
+<td>The account holder’s email address.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>phone_number</td>
+<td>string</td>
+<td>The account holder’s phone number.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>is_live</td>
+<td>boolean</td>
+<td>True if this is not a test or demo transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>disbursement_status</td>
+<td>string</td>
+<td>The disbursement status of this transaction.  Possible values are Disbursable, DoNotDisburse, and Disbursed.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>terminal_type</td>
+<td>string</td>
+<td>Used for card present transactions to indicate the type of terminal used.  Possible values are Unknown, AutomatedDispensingMachine, SelfServiceTerminal, LimitedAmountTerminal, MobilePayDevice, or ChipAndPIN</td>
+<td>No</td>
+</tr>
+<tr>
+<td>routing_number</td>
+<td>string</td>
+<td>The Routing Number for the transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pending_date</td>
+<td>string</td>
+<td>The date by which decision could be made for the transaction. It will be approved or declined.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>check_number</td>
+<td>string</td>
+<td>The Check Number for the transaction to be processed.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>account_type</td>
+<td>string</td>
+<td>The type of account of this transaction. Used for Direct Debit transactions.  Possible values are Checking, Savings, Corporate checkings, or Corporate savings.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>billing_info</td>
+<td><a href="#billinginforead">BillingInfoRead</a></td>
+<td>The billing info for this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>fraud_result</td>
+<td><a href="#fraudresultread">FraudResultRead</a></td>
+<td>The fraud result information for this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>state</td>
+<td>string</td>
+<td>The current processing state of the transaction.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='creditcardread'>CreditCardRead</h2>
+<p>Defines the data model for credit card read.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>card_type</td>
+<td>string</td>
+<td>The IIN value of the card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>exp_month</td>
+<td>integer</td>
+<td>The expiration month for the card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>exp_year</td>
+<td>integer</td>
+<td>The expiration year for the card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>last_four</td>
+<td>string</td>
+<td>The last 4 digits of primary account number for this card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the card holder.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='billinginforead'>BillingInfoRead</h2>
+<p>Defines the data model for billing information.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>city</td>
+<td>string</td>
+<td>The account holder’s billing city.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>country</td>
+<td>string</td>
+<td>The account holder’s billing country - ISO standard.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>post_code</td>
+<td>string</td>
+<td>The account holder’s billing postal code.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>state</td>
+<td>string</td>
+<td>The account holder’s billing state - ISO standard.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>street</td>
+<td>string</td>
+<td>The account holder’s billing address.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='fraudresultread'>FraudResultRead</h2>
+<p>Defines the data model for fraud result information.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>anonymous_proxy_result</td>
+<td>string</td>
+<td>Used for clients who have opted in to Premium Fraud Service, this is the result of the anonymous proxy validation.  The possible values are NotProcessed, Pass, or Failed.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>bin_and_ip_country_result</td>
+<td>string</td>
+<td>Used for clients who have opted in to Premium Fraud Service, this is the result of the bin origination country compared to the origination country of the ip.  The possible values are NotProcessed, Pass, or Failed.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>high_risk_country_result</td>
+<td>string</td>
+<td>Used for clients who have opted in to Premium Fraud Service, this is the result of the high risk country validation.  The possible values are NotProcessed, Pass, or Failed.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>result_code</td>
+<td>string</td>
+<td>Used for clients who have opted in to Premium Fraud Service, this is the result of the overall result of the premium fraud validation.  The possible values are NotProcessed, Passed, FailedProcessingError, FailedProfileSettings, MissingRequiredLicensekey, MissingRequiredField, or NonRoutableIP</td>
+<td>No</td>
+</tr>
+<tr>
+<td>risk_score</td>
+<td>integer</td>
+<td>Used for clients who have opted in to Premium Fraud Service, this is the score that was determined for this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>risk_threshold</td>
+<td>integer</td>
+<td>Used for clients who have opted in to Premium Fraud Service, this is the threshold that was set by the client at the time of this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>velocity_result</td>
+<td>string</td>
+<td>Used for clients who have opted in to Premium Fraud Service, this is the result of the velocity validation.  The possible values are NotProcessed, Pass, or Failed.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='paymentconfigurationread'>PaymentConfigurationRead</h2>
+<p>Defines a payment configuration.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>active</td>
+<td>boolean</td>
+<td>True if the payment configuration is active.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>avs_level</td>
+<td>string</td>
+<td>The AVS level for this payment configuration.  Possible values are None, Full, Medium, or Light.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>csc_level</td>
+<td>string</td>
+<td>The CSC level for this payment configuration.  Possible values are None, Full, or Light.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>string</td>
+<td>The currency used for this payment configuration.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string (uuid)</td>
+<td>The unique identifier for this payment configuration.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the payment configuration.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>process_mode</td>
+<td>string</td>
+<td>The processing mode for this payment configuration.  Possible values are Live, Test, or Demo.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>supported_cards</td>
+<td>[ string ]</td>
+<td>The list of supported card type IINs</td>
+<td>No</td>
+</tr>
+<tr>
+<td>use3ds</td>
+<td>boolean</td>
+<td>True if the payment configuration is set to use 3DS processing.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='paymentconfigurationlistread'>PaymentConfigurationListRead</h2>
+<p>Defines a set of payment configurations.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>integer</td>
+<td>Total count of PaymentConfigurationRead records</td>
+<td>No</td>
+</tr>
+<tr>
+<td>value</td>
+<td>[ <a href="#paymentconfigurationread">PaymentConfigurationRead</a> ]</td>
+<td>An array of PaymentConfigurationRead records</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='refundadd'>RefundAdd</h2>
+<p>Defines the data model for the refund request.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amount</td>
+<td>integer</td>
+<td>The amount to be refund. If empty, will refund the entire amount of the transaction.  Measured in cents: 1000 = $10.00.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>reference_transaction_id</td>
+<td>string (uuid)</td>
+<td>The unique identifier of the transaction to refund.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>transaction_id</td>
+<td>string (uuid)</td>
+<td>Optional unique identifier for this transaction. If empty, will be auto-generated.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='directdebitaccounttokenadd'>DirectDebitAccountTokenAdd</h2>
+<p>Defines the available values for adding a direct debit account token.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>direct_debit_account_info</td>
+<td><a href="#directdebitaccountinfo">DirectDebitAccountInfo</a></td>
+<td>The direct debit account information to tokenize.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>The token identifier.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='directdebitaccountinfo'>DirectDebitAccountInfo</h2>
+<p>Defines a direct debit account to use for transaction processing.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>account_holder</td>
+<td>string</td>
+<td>The name of the account holder of the direct debit transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>account_number</td>
+<td>string</td>
+<td>The account used to make the transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>account_type</td>
+<td>string</td>
+<td>The account type. Possible values are Checking, Savings, Corporate checking, or Corporate savings.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>check_number</td>
+<td>string</td>
+<td>The check number of the transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>routing_number</td>
+<td>string</td>
+<td>The routing number of the direct debit transaction.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='directdebitaccounttokenread'>DirectDebitAccountTokenRead</h2>
+<p>Defines the output values when adding a direct debit account token.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>direct_debit_account_token</td>
+<td>string</td>
+<td>The direct debit account token identifier.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='cardtokenadd'>CardTokenAdd</h2>
+<p>Defines the data model for the card token request.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>exp_month</td>
+<td>integer</td>
+<td>The expiration month for the card.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>exp_year</td>
+<td>integer</td>
+<td>The expiration year for the card.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Gets or sets the ID.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>issue_number</td>
+<td>string</td>
+<td>Optional issue number for the card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the card holder.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>number</td>
+<td>string</td>
+<td>The primary account number for this card.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>valid_from_month</td>
+<td>integer</td>
+<td>Optional issue month for the card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>valid_from_year</td>
+<td>integer</td>
+<td>Optional issue year for the card.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='cardtokenread'>CardTokenRead</h2>
+<p>Defines the data model for the card token endpoint response.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>card_token</td>
+<td>string</td>
+<td>Gets the card token.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='transactionadd'>TransactionAdd</h2>
+<p>Represents options to create a transaction.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tokenize</td>
+<td>boolean</td>
+<td>Optionally tokenize payment information if CreditCardAdd, CardPresentData, or DirectDebitAccountInfo parameters are available.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>transaction_id</td>
+<td>string (uuid)</td>
+<td>Optional unique identifier for this transaction. If empty, will be auto-generated.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>integer</td>
+<td>The monetary amount of the transaction. Measured in cents: 1000 = $10.00.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>payment_configuration_id</td>
+<td>string (uuid)</td>
+<td>The unique identifier for the payment configuration to be used when processing this request.                Payment configurations can be retrieved using the <a href="https://developer.sky.blackbaud.com/docs/services/payments/operations/ListPaymentConfiguration">GET Payment Configuration list endpoint</a>.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>donor_ip</td>
+<td>string</td>
+<td>The IPv4 address of the person whose credit card we are attempting to process. This parameter should be treated as required for all Web applications.  If not provided Premium Fraud Management Services will not be executed.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>The email address of the donor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>string</td>
+<td>The phone number of the donor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>comment</td>
+<td>string</td>
+<td>A free form comment for this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>card_token</td>
+<td>string (uuid)</td>
+<td>The <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">unique identifier</a> for the stored credit card whose PAN you wish to use for this transaction.                This parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>credit_card</td>
+<td><a href="#creditcardadd">CreditCardAdd</a></td>
+<td>The credit card information to be used for this transaction.                This parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>card_present</td>
+<td><a href="#cardpresentdata">CardPresentData</a></td>
+<td>Card Present information swipe data to be used for the transaction.                This parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>csc</td>
+<td>string</td>
+<td>The Card Security Code (CVV2) for the card whose PAN was specified in the CreditCard parameter.  This parameter should be omitted when using a payment configuration that does not perform CSC check.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>billing_contact</td>
+<td><a href="#billinginfoadd">BillingInfoAdd</a></td>
+<td>The billing information for this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>direct_debit_account_info</td>
+<td><a href="#directdebitaccountinfo">DirectDebitAccountInfo</a></td>
+<td>This parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>direct_debit_account_token</td>
+<td>string (uuid)</td>
+<td>The <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">unique identifier</a> for the stored debit account info that can be used for the transaction.                This parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='creditcardadd'>CreditCardAdd</h2>
+<p>Defines the data model for the credit card add.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>exp_month</td>
+<td>integer</td>
+<td>The expiration month for the card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>exp_year</td>
+<td>integer</td>
+<td>The expiration year for the card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>issue_number</td>
+<td>string</td>
+<td>Optional issue number for the card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the card holder.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>number</td>
+<td>string</td>
+<td>The primary account number for this card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>valid_from_month</td>
+<td>integer</td>
+<td>Optional issue month for the card.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>valid_from_year</td>
+<td>integer</td>
+<td>Optional issue year for the card.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='cardpresentdata'>CardPresentData</h2>
+<p>Defines the data model for the card Present request.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>swipe_data</td>
+<td>string</td>
+<td>Swipe data information obtained from card reader. The content should adhere to <a href="https://en.wikipedia.org/wiki/ISO/IEC_7813">the ISO/IEC 7813 standard</a>.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='billinginfoadd'>BillingInfoAdd</h2>
+<p>Defines the data model for billing information request.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>The account holder’s billing address.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>city</td>
+<td>string</td>
+<td>The account holder’s billing city.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>country</td>
+<td>string</td>
+<td>The account holder’s billing country - ISO standard.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>first_name</td>
+<td>string</td>
+<td>The given name of the account holder for the card whose PAN you wish to use for this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>string</td>
+<td>The surname of the account holder for the card whose PAN you wish to use for this transaction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>post_code</td>
+<td>string</td>
+<td>The account holder’s billing postal code.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>state</td>
+<td>string</td>
+<td>The account holder’s billing state - ISO standard.</td>
+<td>No</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
@@ -494,10 +1418,7 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
+                <a href="#" data-language-name="csharp">csharp</a>
           </div>
       </div>
     </div>
