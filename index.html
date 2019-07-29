@@ -561,10 +561,10 @@
 <h1 id='transactions'>Transactions</h1><h2 id='get'>GET</h2>
 <p><code>https://api.sky.blackbaud.com/payments/v1/transactions/{transaction_id}</code></p>
 <pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">yourAccessToken</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
-<span class="kt">var</span> <span class="n">yourPaymentConfigurationId</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">yourTransactionId</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
 <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
 <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://api.sky.blackbaud.com/payments/v1/paymentconfigurations/{yourPaymentConfigurationId}"</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://api.sky.blackbaud.com/payments/v1/transactions/{yourTransactionId}"</span><span class="p">;</span>
 
     <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AuthenticationHeaderValue</span><span class="p">(</span><span class="s">"Bearer"</span><span class="p">,</span> <span class="n">yourAccessToken</span><span class="p">);</span>
     <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Bb-Api-Subscription-Key"</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">.</span><span class="n">SubscriptionKey</span><span class="p">);</span>
