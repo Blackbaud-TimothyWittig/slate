@@ -1,0 +1,1029 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: Payments (Beta)
+  description: This API enables users to accept and manage payments via Blackbaud Merchant Services.
+host: s21apaypsapi00blkbapp01.sky.blackbaud.com
+schemes:
+  - https
+paths:
+  '/v1/cards/{card_token}':
+    get:
+      tags:
+        - Card
+      summary: Card
+      description: Returns information about a stored credit card.
+      operationId: GetCard
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: card_token
+          in: path
+          description: 'The <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">unique identifier</a> of the stored credit card for which you would like to retrieve detailed information.'
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Returned when the operation is successful. The response body contains stored credit card details.
+          schema:
+            $ref: '#/definitions/CardRead'
+          examples:
+            application/json:
+              bank_identification_number: '411111'
+              brand: VISA
+              last_four: '1111'
+              expiry_year: 2020
+              expiry_month: 10
+              cardholder_name: Blackbaud
+        '400':
+          description: Returned when the request is not in the appropriate format.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+        '404':
+          description: Returned when the specified card token was not found.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+  /v1/checkout/publickey:
+    get:
+      tags:
+        - Checkout
+      summary: Public key
+      description: 'Gets the client''s public key. See the <a href="https://developer.blackbaud.com/skyapi/beta/payments/checkout">Blackbaud Checkout integration guide</a> to learn more.'
+      operationId: GetPublicKey
+      consumes: []
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Returned when the operation is successful. The response body contains the client's public key.
+          schema:
+            $ref: '#/definitions/PublicKeyRead'
+          examples:
+            application/json:
+              public_key: 48b58ad0-b763-49b5-95f1-78fb91627f6a
+  /v1/checkout/transaction:
+    post:
+      tags:
+        - Checkout
+      summary: Checkout transaction
+      description: 'Creates a transaction that has been previously authorized by Blackbaud Checkout. See the <a href="https://developer.blackbaud.com/skyapi/beta/payments/checkout">Blackbaud Checkout integration guide</a> to learn more.'
+      operationId: CreateCheckoutTransaction
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: transaction
+          in: body
+          description: The transaction information to charge.
+          required: true
+          schema:
+            $ref: '#/definitions/CheckoutTransactionAdd'
+      responses:
+        '200':
+          description: Returned when the operation is successful. The response body contains transaction details.
+          schema:
+            $ref: '#/definitions/TransactionRead'
+          examples:
+            application/json:
+              token: 00000000-0000-0000-0000-000000000000
+              id: 92844827-5b74-40db-907f-480b13242eb5
+              amount: 1000
+              transaction_type: CardNotPresent
+              credit_card:
+                card_type: Visa
+                exp_month: 2
+                exp_year: 1985
+                last_four: '1111'
+                name: Blackbaud
+              additional_fee: 25
+              currency: USD
+              application: Payments API
+              comment: Recurring donation
+              transaction_date: '1/31/2018 11:07:12 AM'
+              donor_ip_address: 192.168.0.1
+              is_live: false
+              disbursement_status: NotDisbursable
+              billing_info:
+                city: Charleston
+                country: US
+                post_code: '29492'
+                state: SC
+                street: 2000 Daniel Island Drive
+              fraud_result:
+                anonymous_proxy_result: NotProcessed
+                bin_and_ip_country_result: NotProcessed
+                high_risk_country_result: NotProcessed
+                result_code: NotProcessed
+                risk_score: 0
+                risk_threshold: 0
+                velocity_result: NotProcessed
+              state: Processed
+        '400':
+          description: Returned when the request body is not in the appropriate format.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+        '404':
+          description: Returned when the specified transaction was not found.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+  '/v1/paymentconfigurations/{payment_configuration_id}':
+    get:
+      tags:
+        - PaymentConfiguration
+      summary: Payment configuration
+      description: Returns information about a payment configuration.
+      operationId: GetPaymentConfiguration
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: payment_configuration_id
+          in: path
+          description: The identifier for the payment configuration.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Returned when the operation is successful. The response body contains payment configuration details.
+          schema:
+            $ref: '#/definitions/PaymentConfigurationRead'
+          examples:
+            application/json:
+              active: true
+              avs_level: Medium
+              csc_level: Full
+              currency: USD
+              id: 19761b45-9295-4a5c-aa26-c754200cd90f
+              name: Blackbaud Payment Configuration
+              process_mode: Test
+              supported_cards:
+                - Discover
+                - MasterCard
+                - Visa
+              use3ds: false
+        '400':
+          description: Returned when the request body is not in the appropriate format.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+        '404':
+          description: Returned when the specified payment configuration is not found.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+  /v1/paymentconfigurations:
+    get:
+      tags:
+        - PaymentConfiguration
+      summary: Payment configuration list
+      description: Returns a set of payment configurations.
+      operationId: ListPaymentConfiguration
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: include_inactive
+          in: query
+          description: True to include payment configurations whose status is inactive.
+          required: false
+          type: boolean
+      responses:
+        '200':
+          description: Returned when the operation is successful. The response body contains a set of payment configurations.
+          schema:
+            $ref: '#/definitions/PaymentConfigurationListRead'
+          examples:
+            application/json:
+              count: 1
+              value:
+                - active: true
+                  avs_level: Medium
+                  csc_level: Full
+                  currency: USD
+                  id: 19761b45-9295-4a5c-aa26-c754200cd90f
+                  name: Blackbaud Payment Configuration
+                  process_mode: Test
+                  supported_cards:
+                    - Discover
+                    - MasterCard
+                    - Visa
+                  use3ds: false
+        '400':
+          description: Returned when the request body is not in the appropriate format.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+  /v1/refunds:
+    post:
+      tags:
+        - Refund
+      summary: Refund
+      description: Create a refund transaction
+      operationId: CreateRefund
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: refund
+          in: body
+          description: The refund transaction to create
+          required: true
+          schema:
+            $ref: '#/definitions/RefundAdd'
+      responses:
+        '200':
+          description: Returned when the operation successfully processes the refund transaction.
+          schema:
+            $ref: '#/definitions/TransactionRead'
+          examples:
+            application/json:
+              token: 00000000-0000-0000-0000-000000000000
+              id: 92844827-5b74-40db-907f-480b13242eb5
+              amount: 1000
+              transaction_type: CardNotPresent
+              credit_card:
+                card_type: Visa
+                exp_month: 2
+                exp_year: 1985
+                last_four: '1111'
+                name: Blackbaud
+              additional_fee: 25
+              currency: USD
+              application: Payments API
+              comment: Recurring donation
+              transaction_date: '1/31/2018 11:07:12 AM'
+              donor_ip_address: 192.168.0.1
+              is_live: false
+              disbursement_status: NotDisbursable
+              billing_info:
+                city: Charleston
+                country: US
+                post_code: '29492'
+                state: SC
+                street: 2000 Daniel Island Drive
+              fraud_result:
+                anonymous_proxy_result: NotProcessed
+                bin_and_ip_country_result: NotProcessed
+                high_risk_country_result: NotProcessed
+                result_code: NotProcessed
+                risk_score: 0
+                risk_threshold: 0
+                velocity_result: NotProcessed
+              state: Processed
+        '400':
+          description: Returned when the request is invalid.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+  /v1/directdebitaccounttokens:
+    post:
+      tags:
+        - Token
+      summary: Direct debit account token
+      operationId: CreateDirectDebitAccountToken
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: addRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/DirectDebitAccountTokenAdd'
+      responses:
+        '200':
+          description: Returned when the operation successfully stores direct debit account information. The response body contains a token to use in future transactions.
+          schema:
+            $ref: '#/definitions/DirectDebitAccountTokenRead'
+          examples:
+            application/json:
+              direct_debit_account_token: 2405227f-848d-4f17-979e-88e17298a543
+        '400':
+          description: Returned when the request body is not in the appropriate format.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+  /v1/cardtokens:
+    post:
+      tags:
+        - Token
+      summary: Card token
+      description: Securely stores credit or debit card information and returns a token to use in future transactions.
+      operationId: CreateCardToken
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: cardToken
+          in: body
+          description: An object that represents the credit card information to store.
+          required: true
+          schema:
+            $ref: '#/definitions/CardTokenAdd'
+      responses:
+        '200':
+          description: Returned when the operation successfully stores credit card information. The response body contains a token to use in future transactions.
+          schema:
+            $ref: '#/definitions/CardTokenRead'
+          examples:
+            application/json:
+              card_token: 2405227f-848d-4f17-979e-88e17298a543
+        '400':
+          description: Returned when the request body is not in the appropriate format.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+  '/v1/transactions/{transaction_id}':
+    get:
+      tags:
+        - Transaction
+      summary: Transaction
+      description: Returns information about a transaction.
+      operationId: GetTransaction
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: transaction_id
+          in: path
+          description: The identifier of the transaction for which you would like to retrieve additional information.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Returned when the operation is successful. The response body contains transaction details.
+          schema:
+            $ref: '#/definitions/TransactionRead'
+          examples:
+            application/json:
+              token: 00000000-0000-0000-0000-000000000000
+              id: 92844827-5b74-40db-907f-480b13242eb5
+              amount: 1000
+              transaction_type: CardNotPresent
+              credit_card:
+                card_type: Visa
+                exp_month: 2
+                exp_year: 1985
+                last_four: '1111'
+                name: Blackbaud
+              additional_fee: 25
+              currency: USD
+              application: Payments API
+              comment: Recurring donation
+              transaction_date: '1/31/2018 11:07:12 AM'
+              donor_ip_address: 192.168.0.1
+              is_live: false
+              disbursement_status: NotDisbursable
+              billing_info:
+                city: Charleston
+                country: US
+                post_code: '29492'
+                state: SC
+                street: 2000 Daniel Island Drive
+              fraud_result:
+                anonymous_proxy_result: NotProcessed
+                bin_and_ip_country_result: NotProcessed
+                high_risk_country_result: NotProcessed
+                result_code: NotProcessed
+                risk_score: 0
+                risk_threshold: 0
+                velocity_result: NotProcessed
+              state: Processed
+        '400':
+          description: Returned when the request body is not in the appropriate format.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+        '404':
+          description: Returned when the specified transaction was not found.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+  /v1/transactions:
+    post:
+      tags:
+        - Transaction
+      summary: Transaction
+      description: Create a transaction.
+      operationId: CreateTransaction
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: transactionAdd
+          in: body
+          description: An object that represents the transaction to process.
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionAdd'
+      responses:
+        '200':
+          description: Returned when the operation is successful. The response body contains transaction details.
+          schema:
+            $ref: '#/definitions/TransactionRead'
+          examples:
+            application/json:
+              token: 00000000-0000-0000-0000-000000000000
+              id: 92844827-5b74-40db-907f-480b13242eb5
+              amount: 1000
+              transaction_type: CardNotPresent
+              credit_card:
+                card_type: Visa
+                exp_month: 2
+                exp_year: 1985
+                last_four: '1111'
+                name: Blackbaud
+              additional_fee: 25
+              currency: USD
+              application: Payments API
+              comment: Recurring donation
+              transaction_date: '1/31/2018 11:07:12 AM'
+              donor_ip_address: 192.168.0.1
+              is_live: false
+              disbursement_status: NotDisbursable
+              billing_info:
+                city: Charleston
+                country: US
+                post_code: '29492'
+                state: SC
+                street: 2000 Daniel Island Drive
+              fraud_result:
+                anonymous_proxy_result: NotProcessed
+                bin_and_ip_country_result: NotProcessed
+                high_risk_country_result: NotProcessed
+                result_code: NotProcessed
+                risk_score: 0
+                risk_threshold: 0
+                velocity_result: NotProcessed
+              state: Processed
+        '400':
+          description: Returned when the request body is not in the appropriate format.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceError'
+definitions:
+  CardRead:
+    description: Represents a stored credit card.
+    type: object
+    properties:
+      bank_identification_number:
+        description: The first six of the account number for the stored credit card.
+        type: string
+      brand:
+        description: The brand name of the stored credit card.
+        type: string
+      last_four:
+        description: The last four of the account number for the stored credit card.
+        type: string
+      expiry_year:
+        format: int32
+        description: The expiration year for the stored credit card.
+        type: integer
+      expiry_month:
+        format: int32
+        description: The expiration month for the stored credit card.
+        type: integer
+      cardholder_name:
+        description: The name of the account holder for the stored credit card.
+        type: string
+  ServiceError:
+    type: object
+    properties:
+      message:
+        type: string
+      error_name:
+        type: string
+      error_code:
+        format: int32
+        type: integer
+      raw_message:
+        type: string
+      error_args:
+        type: array
+        items:
+          type: string
+  PublicKeyRead:
+    description: Defines the data model for the Public Key endpoint response.
+    type: object
+    properties:
+      public_key:
+        format: uuid
+        description: Gets the public key
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+  CheckoutTransactionAdd:
+    description: Defines the data model for post checkout transaction request.
+    required:
+      - amount
+      - authorization_token
+    type: object
+    properties:
+      amount:
+        format: int32
+        description: "The amount to charge, used to validate that the authorized amount is the same as the amount being charged.\r\nMeasured in cents: 1000 = $10.00."
+        type: integer
+      authorization_token:
+        format: uuid
+        description: The authorization token of the transaction to charge.
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+  TransactionRead:
+    description: Represents a created transaction.
+    type: object
+    properties:
+      token:
+        format: uuid
+        description: The stored token. Available only on creation of Transaction record.
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+      id:
+        format: uuid
+        description: The unique identifier of this transaction.
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+      amount:
+        format: int32
+        description: 'The gross amount of this transaction. Measured in cents: 1000 = $10.00.'
+        type: integer
+      transaction_type:
+        description: "The transaction type of this transaction.\r\nPossible values are CardNotPresent, CardPresent, TransactionBatch, OfflineBatch, Refund, RefundBatch, ChargeBack, ReverseChargeback, or FraudManagement."
+        type: string
+      credit_card:
+        $ref: '#/definitions/CreditCardRead'
+        description: The information of the credit card for this transaction.
+      additional_fee:
+        format: int32
+        description: "The additional fee amount for this transaction.\r\nMeasured in cents: 1000 = $10.00."
+        type: integer
+      currency:
+        description: The 3 char ISO4217 currency code used for this transaction.
+        type: string
+      application:
+        description: The calling Application of this transaction.
+        type: string
+      comment:
+        description: The comment on this transaction.
+        type: string
+      transaction_date:
+        description: The date and time of this transaction.
+        type: string
+      donor_ip_address:
+        description: The IP address where this transaction originated.
+        type: string
+      email_address:
+        description: The account holder’s email address.
+        type: string
+      phone_number:
+        description: The account holder’s phone number.
+        type: string
+      is_live:
+        description: True if this is not a test or demo transaction.
+        type: boolean
+      disbursement_status:
+        description: "The disbursement status of this transaction.\r\nPossible values are Disbursable, DoNotDisburse, and Disbursed."
+        type: string
+      terminal_type:
+        description: "Used for card present transactions to indicate the type of terminal used.\r\nPossible values are Unknown, AutomatedDispensingMachine, SelfServiceTerminal, LimitedAmountTerminal, MobilePayDevice, or ChipAndPIN"
+        type: string
+      routing_number:
+        description: The Routing Number for the transaction.
+        type: string
+      pending_date:
+        description: The date by which decision could be made for the transaction. It will be approved or declined.
+        type: string
+      check_number:
+        description: The Check Number for the transaction to be processed.
+        type: string
+      account_type:
+        description: "The type of account of this transaction. Used for Direct Debit transactions.\r\nPossible values are Checking, Savings, Corporate checkings, or Corporate savings."
+        type: string
+      billing_info:
+        $ref: '#/definitions/BillingInfoRead'
+        description: The billing info for this transaction.
+      fraud_result:
+        $ref: '#/definitions/FraudResultRead'
+        description: The fraud result information for this transaction.
+      state:
+        description: The current processing state of the transaction.
+        enum:
+          - Unknown
+          - Processed
+          - Failed
+          - Refunded
+          - Pending
+          - Authorized
+        type: string
+  CreditCardRead:
+    description: Defines the data model for credit card read.
+    type: object
+    properties:
+      card_type:
+        description: The IIN value of the card.
+        type: string
+      exp_month:
+        format: int32
+        description: The expiration month for the card.
+        type: integer
+      exp_year:
+        format: int32
+        description: The expiration year for the card.
+        type: integer
+      last_four:
+        description: The last 4 digits of primary account number for this card.
+        type: string
+      name:
+        description: The name of the card holder.
+        type: string
+  BillingInfoRead:
+    description: Defines the data model for billing information.
+    type: object
+    properties:
+      city:
+        description: The account holder’s billing city.
+        type: string
+      country:
+        description: The account holder’s billing country - ISO standard.
+        type: string
+      post_code:
+        description: The account holder’s billing postal code.
+        type: string
+      state:
+        description: The account holder’s billing state - ISO standard.
+        type: string
+      street:
+        description: The account holder’s billing address.
+        type: string
+  FraudResultRead:
+    description: Defines the data model for fraud result information.
+    type: object
+    properties:
+      anonymous_proxy_result:
+        description: "Used for clients who have opted in to Premium Fraud Service, this is the result of the anonymous proxy validation.\r\nThe possible values are NotProcessed, Pass, or Failed."
+        type: string
+      bin_and_ip_country_result:
+        description: "Used for clients who have opted in to Premium Fraud Service, this is the result of the bin origination country compared to the origination country of the ip.\r\nThe possible values are NotProcessed, Pass, or Failed."
+        type: string
+      high_risk_country_result:
+        description: "Used for clients who have opted in to Premium Fraud Service, this is the result of the high risk country validation.\r\nThe possible values are NotProcessed, Pass, or Failed."
+        type: string
+      result_code:
+        description: "Used for clients who have opted in to Premium Fraud Service, this is the result of the overall result of the premium fraud validation.\r\nThe possible values are NotProcessed, Passed, FailedProcessingError, FailedProfileSettings, MissingRequiredLicensekey, MissingRequiredField, or NonRoutableIP"
+        type: string
+      risk_score:
+        format: int32
+        description: 'Used for clients who have opted in to Premium Fraud Service, this is the score that was determined for this transaction.'
+        type: integer
+      risk_threshold:
+        format: int32
+        description: 'Used for clients who have opted in to Premium Fraud Service, this is the threshold that was set by the client at the time of this transaction.'
+        type: integer
+      velocity_result:
+        description: "Used for clients who have opted in to Premium Fraud Service, this is the result of the velocity validation.\r\nThe possible values are NotProcessed, Pass, or Failed."
+        type: string
+  PaymentConfigurationRead:
+    description: Defines a payment configuration.
+    type: object
+    properties:
+      active:
+        description: True if the payment configuration is active.
+        type: boolean
+      avs_level:
+        description: "The AVS level for this payment configuration.\r\nPossible values are None, Full, Medium, or Light."
+        type: string
+      csc_level:
+        description: "The CSC level for this payment configuration.\r\nPossible values are None, Full, or Light."
+        type: string
+      currency:
+        description: The currency used for this payment configuration.
+        type: string
+      id:
+        format: uuid
+        description: The unique identifier for this payment configuration.
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+      name:
+        description: The name of the payment configuration.
+        type: string
+      process_mode:
+        description: "The processing mode for this payment configuration.\r\nPossible values are Live, Test, or Demo."
+        type: string
+      supported_cards:
+        description: The list of supported card type IINs
+        type: array
+        items:
+          type: string
+      use3ds:
+        description: True if the payment configuration is set to use 3DS processing.
+        type: boolean
+  PaymentConfigurationListRead:
+    description: Defines a set of payment configurations.
+    type: object
+    properties:
+      count:
+        format: int32
+        description: Total count of PaymentConfigurationRead records
+        type: integer
+      value:
+        description: An array of PaymentConfigurationRead records
+        type: array
+        items:
+          $ref: '#/definitions/PaymentConfigurationRead'
+  RefundAdd:
+    description: Defines the data model for the refund request.
+    required:
+      - reference_transaction_id
+    type: object
+    properties:
+      amount:
+        format: int32
+        description: "The amount to be refund. If empty, will refund the entire amount of the transaction.\r\nMeasured in cents: 1000 = $10.00."
+        type: integer
+      reference_transaction_id:
+        format: uuid
+        description: The unique identifier of the transaction to refund.
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+      transaction_id:
+        format: uuid
+        description: 'Optional unique identifier for this transaction. If empty, will be auto-generated.'
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+    example:
+      amount: 1000
+      reference_transaction_id: c23e2b09-4c9a-401e-a177-e7c068292688
+      transaction_id: 00000000-0000-0000-0000-000000000000
+  DirectDebitAccountTokenAdd:
+    description: Defines the available values for adding a direct debit account token.
+    required:
+      - direct_debit_account_info
+    type: object
+    properties:
+      direct_debit_account_info:
+        $ref: '#/definitions/DirectDebitAccountInfo'
+        description: The direct debit account information to tokenize.
+      id:
+        description: The token identifier.
+        type: string
+    example:
+      direct_debit_account_info:
+        account_holder: Blackbaud
+        account_number: '88888888'
+        account_type: CorporateChecking
+        check_number: '500'
+        routing_number: 091000019
+  DirectDebitAccountInfo:
+    description: Defines a direct debit account to use for transaction processing.
+    type: object
+    properties:
+      account_holder:
+        description: The name of the account holder of the direct debit transaction.
+        type: string
+      account_number:
+        description: The account used to make the transaction.
+        type: string
+      account_type:
+        description: 'The account type. Possible values are Checking, Savings, Corporate checking, or Corporate savings.'
+        enum:
+          - Checking
+          - Savings
+          - CorporateChecking
+          - CorporateSavings
+        type: string
+      check_number:
+        description: The check number of the transaction.
+        type: string
+      routing_number:
+        description: The routing number of the direct debit transaction.
+        type: string
+  DirectDebitAccountTokenRead:
+    description: Defines the output values when adding a direct debit account token.
+    type: object
+    properties:
+      direct_debit_account_token:
+        description: The direct debit account token identifier.
+        type: string
+  CardTokenAdd:
+    description: Defines the data model for the card token request.
+    required:
+      - exp_month
+      - exp_year
+      - name
+      - number
+    type: object
+    properties:
+      exp_month:
+        format: int32
+        description: The expiration month for the card.
+        type: integer
+      exp_year:
+        format: int32
+        description: The expiration year for the card.
+        type: integer
+      id:
+        description: Gets or sets the ID.
+        type: string
+      issue_number:
+        description: Optional issue number for the card.
+        type: string
+      name:
+        description: The name of the card holder.
+        type: string
+      number:
+        description: The primary account number for this card.
+        type: string
+      valid_from_month:
+        format: int32
+        description: Optional issue month for the card.
+        type: integer
+      valid_from_year:
+        format: int32
+        description: Optional issue year for the card.
+        type: integer
+    example:
+      exp_month: 2
+      exp_year: 1985
+      issue_number: '443'
+      name: Blackbaud
+      number: '4111111111111111'
+      valid_from_month: 1
+      valid_from_year: 1980
+  CardTokenRead:
+    description: Defines the data model for the card token endpoint response.
+    type: object
+    properties:
+      card_token:
+        description: Gets the card token.
+        type: string
+  TransactionAdd:
+    description: Represents options to create a transaction.
+    required:
+      - amount
+      - payment_configuration_id
+    type: object
+    properties:
+      tokenize:
+        description: 'Optionally tokenize payment information if CreditCardAdd, CardPresentData, or DirectDebitAccountInfo parameters are available.'
+        type: boolean
+      transaction_id:
+        format: uuid
+        description: 'Optional unique identifier for this transaction. If empty, will be auto-generated.'
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+      amount:
+        format: int32
+        description: 'The monetary amount of the transaction. Measured in cents: 1000 = $10.00.'
+        type: integer
+      payment_configuration_id:
+        format: uuid
+        description: "The unique identifier for the payment configuration to be used when processing this request.\r\n            \r\nPayment configurations can be retrieved using the <a href=\"https://developer.sky.blackbaud.com/docs/services/payments/operations/ListPaymentConfiguration\">GET Payment Configuration list endpoint</a>."
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+      donor_ip:
+        description: "The IPv4 address of the person whose credit card we are attempting to process. This parameter should be treated as required for all Web applications.\r\nIf not provided Premium Fraud Management Services will not be executed."
+        type: string
+      email:
+        description: The email address of the donor.
+        type: string
+      phone:
+        description: The phone number of the donor.
+        type: string
+      comment:
+        description: A free form comment for this transaction.
+        type: string
+      card_token:
+        format: uuid
+        description: "The <a href=\"https://en.wikipedia.org/wiki/Universally_unique_identifier\">unique identifier</a> for the stored credit card whose PAN you wish to use for this transaction.\r\n            \r\nThis parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified."
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+      credit_card:
+        $ref: '#/definitions/CreditCardAdd'
+        description: "The credit card information to be used for this transaction.\r\n            \r\nThis parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified."
+      card_present:
+        $ref: '#/definitions/CardPresentData'
+        description: "Card Present information swipe data to be used for the transaction.\r\n            \r\nThis parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified."
+      csc:
+        description: "The Card Security Code (CVV2) for the card whose PAN was specified in the CreditCard parameter.\r\nThis parameter should be omitted when using a payment configuration that does not perform CSC check."
+        type: string
+      billing_contact:
+        $ref: '#/definitions/BillingInfoAdd'
+        description: The billing information for this transaction.
+      direct_debit_account_info:
+        $ref: '#/definitions/DirectDebitAccountInfo'
+        description: 'This parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified.'
+      direct_debit_account_token:
+        format: uuid
+        description: "The <a href=\"https://en.wikipedia.org/wiki/Universally_unique_identifier\">unique identifier</a> for the stored debit account info that can be used for the transaction.\r\n            \r\nThis parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified."
+        type: string
+        example: 00000000-0000-0000-0000-000000000000
+    example:
+      tokenize: false
+      transaction_id: 00000000-0000-0000-0000-000000000000
+      amount: 1000
+      payment_configuration_id: 992c159f-dcca-4495-aa33-1025546c7af2
+      donor_ip: 192.168.0.1
+      comment: Recurring donation
+      card_token: 00000000-0000-0000-0000-000000000000
+      credit_card:
+        exp_month: 2
+        exp_year: 1985
+        name: Donna Donor
+        number: '4111111111111111'
+        valid_from_month: 0
+        valid_from_year: 0
+      csc: '123'
+      billing_contact:
+        address: 2000 Daniel Island Drive
+        city: Charleston
+        country: US
+        first_name: Blackbaud
+        post_code: '29442'
+        state: SC
+      direct_debit_account_token: 00000000-0000-0000-0000-000000000000
+  CreditCardAdd:
+    description: Defines the data model for the credit card add.
+    type: object
+    properties:
+      exp_month:
+        format: int32
+        description: The expiration month for the card.
+        type: integer
+      exp_year:
+        format: int32
+        description: The expiration year for the card.
+        type: integer
+      issue_number:
+        description: Optional issue number for the card.
+        type: string
+      name:
+        description: The name of the card holder.
+        type: string
+      number:
+        description: The primary account number for this card.
+        type: string
+      valid_from_month:
+        format: int32
+        description: Optional issue month for the card.
+        type: integer
+      valid_from_year:
+        format: int32
+        description: Optional issue year for the card.
+        type: integer
+  CardPresentData:
+    description: Defines the data model for the card Present request.
+    type: object
+    properties:
+      swipe_data:
+        description: 'Swipe data information obtained from card reader. The content should adhere to <a href="https://en.wikipedia.org/wiki/ISO/IEC_7813">the ISO/IEC 7813 standard</a>.'
+        type: string
+  BillingInfoAdd:
+    description: Defines the data model for billing information request.
+    type: object
+    properties:
+      address:
+        description: The account holder’s billing address.
+        type: string
+      city:
+        description: The account holder’s billing city.
+        type: string
+      country:
+        description: The account holder’s billing country - ISO standard.
+        type: string
+      first_name:
+        description: The given name of the account holder for the card whose PAN you wish to use for this transaction.
+        type: string
+      last_name:
+        description: The surname of the account holder for the card whose PAN you wish to use for this transaction.
+        type: string
+      post_code:
+        description: The account holder’s billing postal code.
+        type: string
+      state:
+        description: The account holder’s billing state - ISO standard.
+        type: string

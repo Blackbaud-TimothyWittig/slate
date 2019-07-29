@@ -1,60 +1,98 @@
----
-title: API Reference
+# Payments (Beta)
+This API enables users to accept and manage payments via Blackbaud Merchant Services.
 
-language_tabs: # must be one of https://git.io/vQNgJ
-  - csharp
+## Version: v1
 
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+### /v1/cards/{card_token}
 
-includes:
-  - errors
+#### GET
+##### Summary:
 
-search: true
----
+Card
 
-# Introduction
+##### Description:
 
-Wow, here's an intro the Payments API! It's pretty great and you should definitely use it. However, there's some set up you'll need to do first to prove you aren't a terrorist organization!
+Returns information about a stored credit card.
 
-# Authorization
+##### Parameters
 
-I should talk about OAuth 2 here and maybe some code here too.
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| card_token | path | The <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">unique identifier</a> of the stored credit card for which you would like to retrieve detailed information. | Yes | string (uuid) |
 
-<aside class="notice">
-Leaving this <code>aside</code> in here so I know how to do it.
-</aside>
+##### Responses
 
-# Payment configurations
-## GET single
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Returned when the operation is successful. The response body contains stored credit card details. | [CardRead](#cardread) |
+| 400 | Returned when the request is not in the appropriate format. | [ [ServiceError](#serviceerror) ] |
+| 404 | Returned when the specified card token was not found. | [ [ServiceError](#serviceerror) ] |
 
-`/v1/paymentconfigurations/{payment_configuration_id}`
+### /v1/checkout/publickey
 
-```csharp
-var paymentConfigurationId = "specific id goes here!";
-using (var client = new HttpClient())
-{
-    var url = $"https://api.sky.blackbaud.com/payments/v1/paymentconfigurations/{paymentConfigurationId}";
+#### GET
+##### Summary:
 
-    client.DefaultRequestHeaders.Authorization = BuildSkyApiAuthenticationHeader();
-    client.DefaultRequestHeaders.Add("Bb-Api-Subscription-Key", Configuration.SubscriptionKey);
+Public key
 
-    return await client.GetAsync(url);
-}
-```
+##### Description:
 
-### Description:
+Gets the client's public key. See the <a href="https://developer.blackbaud.com/skyapi/beta/payments/checkout">Blackbaud Checkout integration guide</a> to learn more.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Returned when the operation is successful. The response body contains the client's public key. | [PublicKeyRead](#publickeyread) |
+
+### /v1/checkout/transaction
+
+#### POST
+##### Summary:
+
+Checkout transaction
+
+##### Description:
+
+Creates a transaction that has been previously authorized by Blackbaud Checkout. See the <a href="https://developer.blackbaud.com/skyapi/beta/payments/checkout">Blackbaud Checkout integration guide</a> to learn more.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| transaction | body | The transaction information to charge. | Yes | [CheckoutTransactionAdd](#checkouttransactionadd) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Returned when the operation is successful. The response body contains transaction details. | [TransactionRead](#transactionread) |
+| 400 | Returned when the request body is not in the appropriate format. | [ [ServiceError](#serviceerror) ] |
+| 404 | Returned when the specified transaction was not found. | [ [ServiceError](#serviceerror) ] |
+
+### /v1/paymentconfigurations/{payment_configuration_id}
+
+#### GET
+##### Summary:
+
+Payment configuration
+
+##### Description:
 
 Returns information about a payment configuration.
 
-### Parameters
+##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | payment_configuration_id | path | The identifier for the payment configuration. | Yes | string (uuid) |
 
-### Responses
+##### Responses
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
@@ -62,47 +100,151 @@ Returns information about a payment configuration.
 | 400 | Returned when the request body is not in the appropriate format. | [ [ServiceError](#serviceerror) ] |
 | 404 | Returned when the specified payment configuration is not found. | [ [ServiceError](#serviceerror) ] |
 
-## GET all
+### /v1/paymentconfigurations
 
-`/v1/paymentconfigurations`
-
-```csharp
-using (var client = new HttpClient())
-{
-    var url = "https://api.sky.blackbaud.com/payments/v1/paymentconfigurations";
-
-    client.DefaultRequestHeaders.Authorization = BuildSkyApiAuthenticationHeader();
-    client.DefaultRequestHeaders.Add("Bb-Api-Subscription-Key", Configuration.SubscriptionKey);
-
-    return await client.GetAsync(url);
-}
-```
-
-### Summary:
+#### GET
+##### Summary:
 
 Payment configuration list
 
-### Description:
+##### Description:
 
 Returns a set of payment configurations.
 
-### Parameters
+##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | include_inactive | query | True to include payment configurations whose status is inactive. | No | boolean |
 
-### Responses
+##### Responses
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
 | 200 | Returned when the operation is successful. The response body contains a set of payment configurations. | [PaymentConfigurationListRead](#paymentconfigurationlistread) |
 | 400 | Returned when the request body is not in the appropriate format. | [ [ServiceError](#serviceerror) ] |
 
+### /v1/refunds
 
-# Models
+#### POST
+##### Summary:
 
-## CardRead
+Refund
+
+##### Description:
+
+Create a refund transaction
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| refund | body | The refund transaction to create | Yes | [RefundAdd](#refundadd) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Returned when the operation successfully processes the refund transaction. | [TransactionRead](#transactionread) |
+| 400 | Returned when the request is invalid. | [ [ServiceError](#serviceerror) ] |
+
+### /v1/directdebitaccounttokens
+
+#### POST
+##### Summary:
+
+Direct debit account token
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| addRequest | body |  | Yes | [DirectDebitAccountTokenAdd](#directdebitaccounttokenadd) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Returned when the operation successfully stores direct debit account information. The response body contains a token to use in future transactions. | [DirectDebitAccountTokenRead](#directdebitaccounttokenread) |
+| 400 | Returned when the request body is not in the appropriate format. | [ [ServiceError](#serviceerror) ] |
+
+### /v1/cardtokens
+
+#### POST
+##### Summary:
+
+Card token
+
+##### Description:
+
+Securely stores credit or debit card information and returns a token to use in future transactions.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| cardToken | body | An object that represents the credit card information to store. | Yes | [CardTokenAdd](#cardtokenadd) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Returned when the operation successfully stores credit card information. The response body contains a token to use in future transactions. | [CardTokenRead](#cardtokenread) |
+| 400 | Returned when the request body is not in the appropriate format. | [ [ServiceError](#serviceerror) ] |
+
+### /v1/transactions/{transaction_id}
+
+#### GET
+##### Summary:
+
+Transaction
+
+##### Description:
+
+Returns information about a transaction.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| transaction_id | path | The identifier of the transaction for which you would like to retrieve additional information. | Yes | string (uuid) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Returned when the operation is successful. The response body contains transaction details. | [TransactionRead](#transactionread) |
+| 400 | Returned when the request body is not in the appropriate format. | [ [ServiceError](#serviceerror) ] |
+| 404 | Returned when the specified transaction was not found. | [ [ServiceError](#serviceerror) ] |
+
+### /v1/transactions
+
+#### POST
+##### Summary:
+
+Transaction
+
+##### Description:
+
+Create a transaction.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| transactionAdd | body | An object that represents the transaction to process. | Yes | [TransactionAdd](#transactionadd) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Returned when the operation is successful. The response body contains transaction details. | [TransactionRead](#transactionread) |
+| 400 | Returned when the request body is not in the appropriate format. | [ [ServiceError](#serviceerror) ] |
+
+### Models
+
+
+#### CardRead
 
 Represents a stored credit card.
 
@@ -115,7 +257,7 @@ Represents a stored credit card.
 | expiry_month | integer | The expiration month for the stored credit card. | No |
 | cardholder_name | string | The name of the account holder for the stored credit card. | No |
 
-## ServiceError
+#### ServiceError
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -125,7 +267,7 @@ Represents a stored credit card.
 | raw_message | string |  | No |
 | error_args | [ string ] |  | No |
 
-## PublicKeyRead
+#### PublicKeyRead
 
 Defines the data model for the Public Key endpoint response.
 
@@ -133,7 +275,7 @@ Defines the data model for the Public Key endpoint response.
 | ---- | ---- | ----------- | -------- |
 | public_key | string (uuid) | Gets the public key | No |
 
-## CheckoutTransactionAdd
+#### CheckoutTransactionAdd
 
 Defines the data model for post checkout transaction request.
 
@@ -142,7 +284,7 @@ Defines the data model for post checkout transaction request.
 | amount | integer | The amount to charge, used to validate that the authorized amount is the same as the amount being charged.  Measured in cents: 1000 = $10.00. | Yes |
 | authorization_token | string (uuid) | The authorization token of the transaction to charge. | Yes |
 
-## TransactionRead
+#### TransactionRead
 
 Represents a created transaction.
 
@@ -172,7 +314,7 @@ Represents a created transaction.
 | fraud_result | [FraudResultRead](#fraudresultread) | The fraud result information for this transaction. | No |
 | state | string | The current processing state of the transaction. | No |
 
-## CreditCardRead
+#### CreditCardRead
 
 Defines the data model for credit card read.
 
@@ -184,7 +326,7 @@ Defines the data model for credit card read.
 | last_four | string | The last 4 digits of primary account number for this card. | No |
 | name | string | The name of the card holder. | No |
 
-## BillingInfoRead
+#### BillingInfoRead
 
 Defines the data model for billing information.
 
@@ -196,7 +338,7 @@ Defines the data model for billing information.
 | state | string | The account holder’s billing state - ISO standard. | No |
 | street | string | The account holder’s billing address. | No |
 
-## FraudResultRead
+#### FraudResultRead
 
 Defines the data model for fraud result information.
 
@@ -210,7 +352,7 @@ Defines the data model for fraud result information.
 | risk_threshold | integer | Used for clients who have opted in to Premium Fraud Service, this is the threshold that was set by the client at the time of this transaction. | No |
 | velocity_result | string | Used for clients who have opted in to Premium Fraud Service, this is the result of the velocity validation.  The possible values are NotProcessed, Pass, or Failed. | No |
 
-## PaymentConfigurationRead
+#### PaymentConfigurationRead
 
 Defines a payment configuration.
 
@@ -226,7 +368,7 @@ Defines a payment configuration.
 | supported_cards | [ string ] | The list of supported card type IINs | No |
 | use3ds | boolean | True if the payment configuration is set to use 3DS processing. | No |
 
-## PaymentConfigurationListRead
+#### PaymentConfigurationListRead
 
 Defines a set of payment configurations.
 
@@ -235,7 +377,7 @@ Defines a set of payment configurations.
 | count | integer | Total count of PaymentConfigurationRead records | No |
 | value | [ [PaymentConfigurationRead](#paymentconfigurationread) ] | An array of PaymentConfigurationRead records | No |
 
-## RefundAdd
+#### RefundAdd
 
 Defines the data model for the refund request.
 
@@ -245,7 +387,7 @@ Defines the data model for the refund request.
 | reference_transaction_id | string (uuid) | The unique identifier of the transaction to refund. | Yes |
 | transaction_id | string (uuid) | Optional unique identifier for this transaction. If empty, will be auto-generated. | No |
 
-## DirectDebitAccountTokenAdd
+#### DirectDebitAccountTokenAdd
 
 Defines the available values for adding a direct debit account token.
 
@@ -254,7 +396,7 @@ Defines the available values for adding a direct debit account token.
 | direct_debit_account_info | [DirectDebitAccountInfo](#directdebitaccountinfo) | The direct debit account information to tokenize. | Yes |
 | id | string | The token identifier. | No |
 
-## DirectDebitAccountInfo
+#### DirectDebitAccountInfo
 
 Defines a direct debit account to use for transaction processing.
 
@@ -266,7 +408,7 @@ Defines a direct debit account to use for transaction processing.
 | check_number | string | The check number of the transaction. | No |
 | routing_number | string | The routing number of the direct debit transaction. | No |
 
-## DirectDebitAccountTokenRead
+#### DirectDebitAccountTokenRead
 
 Defines the output values when adding a direct debit account token.
 
@@ -274,7 +416,7 @@ Defines the output values when adding a direct debit account token.
 | ---- | ---- | ----------- | -------- |
 | direct_debit_account_token | string | The direct debit account token identifier. | No |
 
-## CardTokenAdd
+#### CardTokenAdd
 
 Defines the data model for the card token request.
 
@@ -289,7 +431,7 @@ Defines the data model for the card token request.
 | valid_from_month | integer | Optional issue month for the card. | No |
 | valid_from_year | integer | Optional issue year for the card. | No |
 
-## CardTokenRead
+#### CardTokenRead
 
 Defines the data model for the card token endpoint response.
 
@@ -297,7 +439,7 @@ Defines the data model for the card token endpoint response.
 | ---- | ---- | ----------- | -------- |
 | card_token | string | Gets the card token. | No |
 
-## TransactionAdd
+#### TransactionAdd
 
 Represents options to create a transaction.
 
@@ -319,7 +461,7 @@ Represents options to create a transaction.
 | direct_debit_account_info | [DirectDebitAccountInfo](#directdebitaccountinfo) | This parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified. | No |
 | direct_debit_account_token | string (uuid) | The <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">unique identifier</a> for the stored debit account info that can be used for the transaction.                This parameter is optional, but either the CreditCard, CardToken, CardPresent, DirectDebitAccountInfo, or DirectDebitAccountToken parameter must be specified. | No |
 
-## CreditCardAdd
+#### CreditCardAdd
 
 Defines the data model for the credit card add.
 
@@ -333,7 +475,7 @@ Defines the data model for the credit card add.
 | valid_from_month | integer | Optional issue month for the card. | No |
 | valid_from_year | integer | Optional issue year for the card. | No |
 
-## CardPresentData
+#### CardPresentData
 
 Defines the data model for the card Present request.
 
@@ -341,7 +483,7 @@ Defines the data model for the card Present request.
 | ---- | ---- | ----------- | -------- |
 | swipe_data | string | Swipe data information obtained from card reader. The content should adhere to <a href="https://en.wikipedia.org/wiki/ISO/IEC_7813">the ISO/IEC 7813 standard</a>. | No |
 
-## BillingInfoAdd
+#### BillingInfoAdd
 
 Defines the data model for billing information request.
 
