@@ -6,10 +6,10 @@
 
 ```csharp
 var yourAccessToken = "";
-var yourPaymentConfigurationId = "";
+var yourTransactionId = "";
 using (var client = new HttpClient())
 {
-    var url = $"https://api.sky.blackbaud.com/payments/v1/paymentconfigurations/{yourPaymentConfigurationId}";
+    var url = $"https://api.sky.blackbaud.com/payments/v1/transactions/{yourTransactionId}";
 
     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", yourAccessToken);
     client.DefaultRequestHeaders.Add("Bb-Api-Subscription-Key", Configuration.SubscriptionKey);
