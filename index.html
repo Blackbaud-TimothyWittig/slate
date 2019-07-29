@@ -247,6 +247,17 @@
               </ul>
           </li>
           <li>
+            <a href="#transactions" class="toc-h1 toc-link" data-title="Transactions">Transactions</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get" class="toc-h2 toc-link" data-title="GET">GET</a>
+                  </li>
+                  <li>
+                    <a href="#post" class="toc-h2 toc-link" data-title="POST">POST</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#models" class="toc-h1 toc-link" data-title="Models">Models</a>
               <ul class="toc-list-h2">
                   <li>
@@ -316,7 +327,7 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='https://developer.blackbaud.com/signup'>Sign Up for SKY API</a></li>
             <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -324,16 +335,14 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Wow, here&#39;s an intro the Payments API! It&#39;s pretty great and you should definitely use it. However, there&#39;s some set up you&#39;ll need to do first to prove you aren&#39;t a terrorist organization!</p>
+<p>The Payments API (Beta) enables users to accept and manage payments using Blackbaud Merchant Services. </p>
+
+<aside class="warning">This API is available to Blackbaud customers and partners, and subscription requests require approval from Blackbaud.</aside>
 <h1 id='authorization'>Authorization</h1>
 <p>The Payments API relies on <a href="https://developer.blackbaud.com/skyapi/docs/authorization/auth-code-flow">SKY API&#39;s implementation of OAuth2</a> for authorizing requests. </p>
 
 <p>See the SKY API authorization code flow <a href="https://developer.blackbaud.com/skyapi/docs/authorization/auth-code-flow/code-samples">code samples</a> for complete examples of how to implement this, but the following captures key steps.</p>
 <h2 id='request-access'>Request access</h2>
-<p>The first step is getting approval from a user at the organization for your application to access their data.</p>
-
-<aside class="notice">Don't forget to provide the values specific to your application.</aside>
-
 <blockquote>
 <p>Request access</p>
 </blockquote>
@@ -347,11 +356,11 @@
 </span>
     <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">skyApiTokenUrl</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre><h2 id='retrieve-tokens'>Retrieve tokens</h2>
-<p>The second step is exchanging the authorization code for the access and refresh token.</p>
+</code></pre>
+<p>The first step is getting approval from a user at the organization for your application to access their data.</p>
 
 <aside class="notice">Don't forget to provide the values specific to your application.</aside>
-
+<h2 id='retrieve-tokens'>Retrieve tokens</h2>
 <blockquote>
 <p>Exchange auth code for tokens</p>
 </blockquote>
@@ -392,11 +401,11 @@
         <span class="kt">var</span> <span class="n">refreshToken</span> <span class="p">=</span> <span class="n">tokens</span><span class="p">[</span><span class="s">"refresh_token"</span><span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre><h2 id='refresh-tokens'>Refresh tokens</h2>
-<p>The third step is once your access token expires, to exchange your refresh token for a new pair of access and refresh token.</p>
+</code></pre>
+<p>The second step is exchanging the authorization code for the access and refresh token.</p>
 
 <aside class="notice">Don't forget to provide the values specific to your application.</aside>
-
+<h2 id='refresh-tokens'>Refresh tokens</h2>
 <blockquote>
 <p>Refresh tokens</p>
 </blockquote>
@@ -435,14 +444,19 @@
         <span class="kt">var</span> <span class="n">refreshToken</span> <span class="p">=</span> <span class="n">tokens</span><span class="p">[</span><span class="s">"refresh_token"</span><span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre><h1 id='payment-configurations'>Payment configurations</h1><h2 id='get-single'>GET single</h2>
-<p><code>/v1/paymentconfigurations/{payment_configuration_id}</code></p>
-<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">paymentConfigurationId</span> <span class="p">=</span> <span class="s">"specific id goes here!"</span><span class="p">;</span>
+</code></pre>
+<p>The third step is once your access token expires, to exchange your refresh token for a new pair of access and refresh token.</p>
+
+<aside class="notice">Don't forget to provide the values specific to your application.</aside>
+<h1 id='payment-configurations'>Payment configurations</h1><h2 id='get-single'>GET single</h2>
+<p><code>https://api.sky.blackbaud.com/payments/v1/paymentconfigurations/{payment_configuration_id}</code></p>
+<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">yourAccessToken</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">yourPaymentConfigurationId</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
 <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
 <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://api.sky.blackbaud.com/payments/v1/paymentconfigurations/{paymentConfigurationId}"</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://api.sky.blackbaud.com/payments/v1/paymentconfigurations/{yourPaymentConfigurationId}"</span><span class="p">;</span>
 
-    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="nf">BuildSkyApiAuthenticationHeader</span><span class="p">();</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AuthenticationHeaderValue</span><span class="p">(</span><span class="s">"Bearer"</span><span class="p">,</span> <span class="n">yourAccessToken</span><span class="p">);</span>
     <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Bb-Api-Subscription-Key"</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">.</span><span class="n">SubscriptionKey</span><span class="p">);</span>
 
     <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
@@ -492,12 +506,13 @@
 </tr>
 </tbody></table>
 <h2 id='get-all'>GET all</h2>
-<p><code>/v1/paymentconfigurations</code></p>
-<pre class="highlight csharp tab-csharp"><code><span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
+<p><code>https://api.sky.blackbaud.com/payments/v1/paymentconfigurations</code></p>
+<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">yourAccessToken</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
 <span class="p">{</span>
     <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="s">"https://api.sky.blackbaud.com/payments/v1/paymentconfigurations"</span><span class="p">;</span>
 
-    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="nf">BuildSkyApiAuthenticationHeader</span><span class="p">();</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AuthenticationHeaderValue</span><span class="p">(</span><span class="s">"Bearer"</span><span class="p">,</span> <span class="n">yourAccessToken</span><span class="p">);</span>
     <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Bb-Api-Subscription-Key"</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">.</span><span class="n">SubscriptionKey</span><span class="p">);</span>
 
     <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
@@ -536,6 +551,104 @@
 <td>200</td>
 <td>Returned when the operation is successful. The response body contains a set of payment configurations.</td>
 <td><a href="#paymentconfigurationlistread">PaymentConfigurationListRead</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td>Returned when the request body is not in the appropriate format.</td>
+<td>[ <a href="#serviceerror">ServiceError</a> ]</td>
+</tr>
+</tbody></table>
+<h1 id='transactions'>Transactions</h1><h2 id='get'>GET</h2>
+<p><code>https://api.sky.blackbaud.com/payments/v1/transactions/{transaction_id}</code></p>
+<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">yourAccessToken</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">yourPaymentConfigurationId</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://api.sky.blackbaud.com/payments/v1/paymentconfigurations/{yourPaymentConfigurationId}"</span><span class="p">;</span>
+
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AuthenticationHeaderValue</span><span class="p">(</span><span class="s">"Bearer"</span><span class="p">,</span> <span class="n">yourAccessToken</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Bb-Api-Subscription-Key"</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">.</span><span class="n">SubscriptionKey</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre><h3 id='description'>Description:</h3>
+<p>Returns information about a transaction.</p>
+<h3 id='parameters'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>transaction_id</td>
+<td>path</td>
+<td>The identifier of the transaction for which you would like to retrieve additional information.</td>
+<td>Yes</td>
+<td>string (uuid)</td>
+</tr>
+</tbody></table>
+<h3 id='responses'>Responses</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returned when the operation is successful. The response body contains transaction details.</td>
+<td><a href="#transactionread">TransactionRead</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td>Returned when the request body is not in the appropriate format.</td>
+<td>[ <a href="#serviceerror">ServiceError</a> ]</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Returned when the specified transaction was not found.</td>
+<td>[ <a href="#serviceerror">ServiceError</a> ]</td>
+</tr>
+</tbody></table>
+<h2 id='post'>POST</h2>
+<p><code>https://api.sky.blackbaud.com/payments/v1/transactions</code></p>
+<h3 id='description-2'>Description:</h3>
+<p>Create a transaction.</p>
+<h3 id='parameters-2'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>transactionAdd</td>
+<td>body</td>
+<td>An object that represents the transaction to process.</td>
+<td>Yes</td>
+<td><a href="#transactionadd">TransactionAdd</a></td>
+</tr>
+</tbody></table>
+<h3 id='responses-2'>Responses</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returned when the operation is successful. The response body contains transaction details.</td>
+<td><a href="#transactionread">TransactionRead</a></td>
 </tr>
 <tr>
 <td>400</td>
