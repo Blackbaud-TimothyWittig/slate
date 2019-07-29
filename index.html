@@ -223,6 +223,17 @@
           </li>
           <li>
             <a href="#authorization" class="toc-h1 toc-link" data-title="Authorization">Authorization</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#request-access" class="toc-h2 toc-link" data-title="Request access">Request access</a>
+                  </li>
+                  <li>
+                    <a href="#retrieve-tokens" class="toc-h2 toc-link" data-title="Retrieve tokens">Retrieve tokens</a>
+                  </li>
+                  <li>
+                    <a href="#refresh-tokens" class="toc-h2 toc-link" data-title="Refresh tokens">Refresh tokens</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#payment-configurations" class="toc-h1 toc-link" data-title="Payment configurations">Payment configurations</a>
@@ -315,12 +326,116 @@
         <h1 id='introduction'>Introduction</h1>
 <p>Wow, here&#39;s an intro the Payments API! It&#39;s pretty great and you should definitely use it. However, there&#39;s some set up you&#39;ll need to do first to prove you aren&#39;t a terrorist organization!</p>
 <h1 id='authorization'>Authorization</h1>
-<p>I should talk about OAuth 2 here and maybe some code here too.</p>
+<p>The Payments API relies on <a href="https://developer.blackbaud.com/skyapi/docs/authorization/auth-code-flow">SKY API&#39;s implementation of OAuth2</a> for authorizing requests. </p>
 
-<aside class="notice">
-Leaving this <code>aside</code> in here so I know how to do it.
-</aside>
-<h1 id='payment-configurations'>Payment configurations</h1><h2 id='get-single'>GET single</h2>
+<p>See the SKY API authorization code flow <a href="https://developer.blackbaud.com/skyapi/docs/authorization/auth-code-flow/code-samples">code samples</a> for complete examples of how to implement this, but the following captures key steps.</p>
+<h2 id='request-access'>Request access</h2>
+<p>The first step is getting approval from a user at the organization for your application to access their data.</p>
+
+<aside class="notice">Don't forget to provide the values specific to your application.</aside>
+
+<blockquote>
+<p>Request access</p>
+</blockquote>
+<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">yourApplicationId</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">yourApplicationCallbackUri</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">skyApiTokenUrl</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://oauth2.sky.blackbaud.com/authorization?"</span> 
+      <span class="p">+</span> <span class="err">$</span><span class="s">"client_id={yourApplicationId}&amp;response_type=code"</span>
+      <span class="p">+</span> <span class="p">&amp;</span><span class="n">redirect_uri</span><span class="p">={</span><span class="n">yourApplicationCallbackUri</span><span class="p">}</span><span class="s">";
+</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">skyApiTokenUrl</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre><h2 id='retrieve-tokens'>Retrieve tokens</h2>
+<p>The second step is exchanging the authorization code for the access and refresh token.</p>
+
+<aside class="notice">Don't forget to provide the values specific to your application.</aside>
+
+<blockquote>
+<p>Exchange auth code for tokens</p>
+</blockquote>
+<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">code</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span> <span class="c1">// This is the authorization code from the previous step</span>
+<span class="kt">var</span> <span class="n">yourApplicationCallbackUri</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">yourApplicationId</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">yourApplicationSecret</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">skyApiTokenUrl</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://oauth2.sky.blackbaud.com/token"</span><span class="p">;</span>
+
+    <span class="kt">var</span> <span class="n">requestBody</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;()</span>
+    <span class="p">{</span>
+        <span class="p">{</span> <span class="s">"grant_type"</span><span class="p">,</span> <span class="s">"authorization_code"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">"code"</span><span class="p">,</span> <span class="n">code</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">"redirect_uri"</span><span class="p">,</span> <span class="n">yourApplicationCallbackUri</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="kt">var</span> <span class="n">password</span> <span class="p">=</span> <span class="n">Utility</span><span class="p">.</span><span class="nf">EncodeBase64</span><span class="p">(</span><span class="err">$</span><span class="s">"{yourApplicationId}:{yourApplicationSecret}"</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AuthenticationHeaderValue</span><span class="p">(</span><span class="s">"Basic"</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Accept</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span>
+      <span class="k">new</span> <span class="nf">MediaTypeWithQualityHeaderValue</span><span class="p">(</span>
+        <span class="s">"application/x-www-form-urlencoded"</span><span class="p">));</span>
+
+    <span class="kt">var</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">PostAsync</span><span class="p">(</span><span class="n">skyApiTokenUrl</span><span class="p">,</span> <span class="k">new</span> <span class="nf">FormUrlEncodedContent</span><span class="p">(</span><span class="n">requestBody</span><span class="p">));</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">IsSuccessStatusCode</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">tokens</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="n">DeserializeObject</span><span class="p">&lt;</span><span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;&gt;(</span>
+          <span class="k">await</span> <span class="n">response</span><span class="p">.</span><span class="n">Content</span><span class="p">.</span><span class="nf">ReadAsStringAsync</span><span class="p">());</span>
+
+        <span class="c1">// You can use this to issue authorized requests.</span>
+        <span class="kt">var</span> <span class="n">accessToken</span> <span class="p">=</span> <span class="n">tokens</span><span class="p">[</span><span class="s">"access_token"</span><span class="p">];</span>
+
+        <span class="c1">// You can use this in the next step.</span>
+        <span class="kt">var</span> <span class="n">refreshToken</span> <span class="p">=</span> <span class="n">tokens</span><span class="p">[</span><span class="s">"refresh_token"</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h2 id='refresh-tokens'>Refresh tokens</h2>
+<p>The third step is once your access token expires, to exchange your refresh token for a new pair of access and refresh token.</p>
+
+<aside class="notice">Don't forget to provide the values specific to your application.</aside>
+
+<blockquote>
+<p>Refresh tokens</p>
+</blockquote>
+<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">refreshToken</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span> <span class="c1">// This is the refresh token from the previous step</span>
+<span class="kt">var</span> <span class="n">yourApplicationCallbackUri</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">yourApplicationId</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">yourApplicationSecret</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">skyApiTokenUrl</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://oauth2.sky.blackbaud.com/token"</span><span class="p">;</span>
+
+    <span class="kt">var</span> <span class="n">requestBody</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;()</span>
+    <span class="p">{</span>
+        <span class="p">{</span> <span class="s">"grant_type"</span><span class="p">,</span> <span class="s">"refresh_token"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">"refresh_token"</span><span class="p">,</span> <span class="n">RefreshToken</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="kt">var</span> <span class="n">password</span> <span class="p">=</span> <span class="n">Utility</span><span class="p">.</span><span class="nf">EncodeBase64</span><span class="p">(</span><span class="err">$</span><span class="s">"{yourApplicationId}:{yourApplicationSecret}"</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AuthenticationHeaderValue</span><span class="p">(</span><span class="s">"Basic"</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+
+    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Accept</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span>
+      <span class="k">new</span> <span class="nf">MediaTypeWithQualityHeaderValue</span><span class="p">(</span>
+        <span class="s">"application/x-www-form-urlencoded"</span><span class="p">));</span>
+
+    <span class="kt">var</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">PostAsync</span><span class="p">(</span><span class="n">skyApiTokenUrl</span><span class="p">,</span> <span class="k">new</span> <span class="nf">FormUrlEncodedContent</span><span class="p">(</span><span class="n">requestBody</span><span class="p">));</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">IsSuccessStatusCode</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">tokens</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="n">DeserializeObject</span><span class="p">&lt;</span><span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;&gt;(</span>
+          <span class="k">await</span> <span class="n">response</span><span class="p">.</span><span class="n">Content</span><span class="p">.</span><span class="nf">ReadAsStringAsync</span><span class="p">());</span>
+
+        <span class="c1">// You can use this to issue authorized requests.</span>
+        <span class="kt">var</span> <span class="n">accessToken</span> <span class="p">=</span> <span class="n">tokens</span><span class="p">[</span><span class="s">"access_token"</span><span class="p">];</span>
+
+        <span class="c1">// Rinse and repeat.</span>
+        <span class="kt">var</span> <span class="n">refreshToken</span> <span class="p">=</span> <span class="n">tokens</span><span class="p">[</span><span class="s">"refresh_token"</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h1 id='payment-configurations'>Payment configurations</h1><h2 id='get-single'>GET single</h2>
 <p><code>/v1/paymentconfigurations/{payment_configuration_id}</code></p>
 <pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">paymentConfigurationId</span> <span class="p">=</span> <span class="s">"specific id goes here!"</span><span class="p">;</span>
 <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
@@ -1361,8 +1476,6 @@ Leaving this <code>aside</code> in here so I know how to do it.
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
 </aside>
 
-<p>The Kittn API uses the following error codes:</p>
-
 <table><thead>
 <tr>
 <th>Error Code</th>
@@ -1371,47 +1484,27 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 </thead><tbody>
 <tr>
 <td>400</td>
-<td>Bad Request -- Your request is invalid.</td>
+<td>Bad Request</td>
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
+<td>Unauthorized</td>
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+<td>Forbidden</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
+<td>Not Found</td>
 </tr>
 <tr>
 <td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+<td>Too Many Requests</td>
 </tr>
 <tr>
 <td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+<td>Internal Server Error</td>
 </tr>
 </tbody></table>
 
