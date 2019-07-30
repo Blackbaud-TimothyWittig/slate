@@ -360,9 +360,9 @@
     <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">skyApiTokenUrl</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre>
-<p>The first step is getting approval from a user at the organization for your application to access their data.</p>
+<aside class="notice">Don't forget to provide the values specific to your application and account on each step!</aside>
 
-<aside class="notice">Don't forget to provide the values specific to your application.</aside>
+<p>The first step is getting approval from a user at the organization for your application to access their data.</p>
 <h2 id='retrieve-tokens'>Retrieve tokens</h2>
 <blockquote>
 <p>Exchange auth code for tokens</p>
@@ -406,8 +406,6 @@
 <span class="p">}</span>
 </code></pre>
 <p>The second step is exchanging the authorization code for the access and refresh token.</p>
-
-<aside class="notice">Don't forget to provide the values specific to your application.</aside>
 <h2 id='refresh-tokens'>Refresh tokens</h2>
 <blockquote>
 <p>Refresh tokens</p>
@@ -449,8 +447,6 @@
 <span class="p">}</span>
 </code></pre>
 <p>The third step is once your access token expires, to exchange your refresh token for a new pair of access and refresh token.</p>
-
-<aside class="notice">Don't forget to provide the values specific to your application.</aside>
 <h1 id='payments-api-client'>Payments API Client</h1>
 <blockquote>
 <p>Add your access token and subscription key as headers to the http client</p>
@@ -574,20 +570,15 @@
 <td>[ <a href="#serviceerror">ServiceError</a> ]</td>
 </tr>
 </tbody></table>
-<h1 id='transactions'>Transactions</h1><h2 id='get'>GET</h2>
-<p><code>https://api.sky.blackbaud.com/payments/v1/transactions/{transaction_id}</code></p>
-<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">yourAccessToken</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
-<span class="kt">var</span> <span class="n">yourTransactionId</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
-<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">())</span>
+<h1 id='transactions'>Transactions</h1><h2 id='get'>GET</h2><pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">transactionId</span> <span class="p">=</span> <span class="s">"&lt;a valid transaction id&gt;"</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">transaction</span> <span class="p">=</span> <span class="k">await</span> <span class="n">paymentsApiClient</span><span class="p">.</span><span class="nf">GetTransactionAsync</span><span class="p">(</span><span class="n">transactionId</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">transaction</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">Blackbaud</span><span class="p">.</span><span class="n">PaymentsApi</span><span class="p">.</span><span class="n">TransactionReadState</span><span class="p">.</span><span class="n">Pending</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="err">$</span><span class="s">"https://api.sky.blackbaud.com/payments/v1/transactions/{yourTransactionId}"</span><span class="p">;</span>
-
-    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Authorization</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AuthenticationHeaderValue</span><span class="p">(</span><span class="s">"Bearer"</span><span class="p">,</span> <span class="n">yourAccessToken</span><span class="p">);</span>
-    <span class="n">client</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Bb-Api-Subscription-Key"</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">.</span><span class="n">SubscriptionKey</span><span class="p">);</span>
-
-    <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+    <span class="c1">// Do something.</span>
 <span class="p">}</span>
-</code></pre><h3 id='description'>Description:</h3>
+</code></pre>
+<p><code>https://api.sky.blackbaud.com/payments/v1/transactions/{transaction_id}</code></p>
+<h3 id='description'>Description:</h3>
 <p>Returns information about a transaction.</p>
 <h3 id='parameters'>Parameters</h3>
 <table><thead>
@@ -631,7 +622,35 @@
 <td>[ <a href="#serviceerror">ServiceError</a> ]</td>
 </tr>
 </tbody></table>
-<h2 id='post'>POST</h2>
+<h2 id='post'>POST</h2><pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">transactionAdd</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Blackbaud</span><span class="p">.</span><span class="n">PaymentsApi</span><span class="p">.</span><span class="n">TransactionAdd</span> <span class="p">{</span>
+    <span class="n">Amount</span> <span class="p">=</span> <span class="m">1000</span><span class="p">,</span>
+    <span class="n">Billing_contact</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Blackbaud</span><span class="p">.</span><span class="n">PaymentsApi</span><span class="p">.</span><span class="n">BillingInfoAdd</span>
+    <span class="p">{</span>
+        <span class="n">Address</span> <span class="p">=</span> <span class="s">"2000 Daniel Island Drive"</span><span class="p">,</span>
+        <span class="n">City</span> <span class="p">=</span> <span class="s">"Charleston"</span><span class="p">,</span>
+        <span class="n">Country</span> <span class="p">=</span> <span class="s">"US"</span><span class="p">,</span>
+        <span class="n">First_name</span> <span class="p">=</span> <span class="s">"Blackbaud"</span><span class="p">,</span>
+        <span class="n">Post_code</span> <span class="p">=</span> <span class="s">"29442"</span><span class="p">,</span>
+        <span class="n">State</span> <span class="p">=</span> <span class="s">"SC"</span>
+    <span class="p">},</span>
+    <span class="n">Credit_card</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Blackbaud</span><span class="p">.</span><span class="n">PaymentsApi</span><span class="p">.</span><span class="n">CreditCardAdd</span>
+    <span class="p">{</span>
+        <span class="n">Exp_month</span> <span class="p">=</span> <span class="m">2</span><span class="p">,</span>
+        <span class="n">Exp_year</span> <span class="p">=</span> <span class="m">1985</span><span class="p">,</span>
+        <span class="n">Name</span> <span class="p">=</span> <span class="s">"Donna Donor"</span><span class="p">,</span>
+        <span class="n">Number</span> <span class="p">=</span> <span class="s">"4111111111111111"</span>
+    <span class="p">},</span>
+    <span class="n">Csc</span> <span class="p">=</span> <span class="s">"123"</span><span class="p">,</span>
+    <span class="n">Comment</span> <span class="p">=</span> <span class="s">"Recurring donation"</span><span class="p">,</span>
+    <span class="n">Donor_ip</span> <span class="p">=</span> <span class="s">"192.168.0.1"</span><span class="p">,</span>
+    <span class="n">Payment_configuration_id</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Guid</span><span class="p">(</span><span class="s">"&lt;a valid payment configuration id&gt;"</span><span class="p">)</span>
+<span class="p">};</span>
+<span class="kt">var</span> <span class="n">transaction</span> <span class="p">=</span> <span class="k">await</span> <span class="n">paymentsApiClient</span><span class="p">.</span><span class="nf">CreateTransactionAsync</span><span class="p">(</span><span class="n">transactionAdd</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">transaction</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">Blackbaud</span><span class="p">.</span><span class="n">PaymentsApi</span><span class="p">.</span><span class="n">TransactionReadState</span><span class="p">.</span><span class="n">Processed</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Do something.</span>
+<span class="p">}</span>
+</code></pre>
 <p><code>https://api.sky.blackbaud.com/payments/v1/transactions</code></p>
 <h3 id='description-2'>Description:</h3>
 <p>Create a transaction.</p>
@@ -1601,10 +1620,6 @@
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
-
 <table><thead>
 <tr>
 <th>Error Code</th>
