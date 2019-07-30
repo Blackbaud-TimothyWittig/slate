@@ -16,6 +16,8 @@ using (var httpClient = new HttpClient())
 
 > The client library let's you manage the lifecycle of the the `HttpClient` that it uses.
 
-<aside class="warning">TODO: provide links to client repos.</aside>
+**Client libraries available for the following languages**
+
+[.NET Core](https://github.com/Blackbaud-TimothyWittig/payments-api-dotnet-client)
 
 Once you have your access token and subscription key on hand, you can create an instance of the Payments API Client.
