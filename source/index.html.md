@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: Payments API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - csharp
