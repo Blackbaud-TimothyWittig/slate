@@ -2,21 +2,17 @@
 
 ## GET
 
-`https://api.sky.blackbaud.com/payments/v1/transactions/{transaction_id}`
 
 ```csharp
-var yourAccessToken = "";
-var yourTransactionId = "";
-using (var client = new HttpClient())
+var transactionId = "<a valid transaction id>";
+var transaction = await paymentsApiClient.GetTransactionAsync(transactionId);
+if (transaction.State == Blackbaud.PaymentsApi.TransactionReadState.Pending)
 {
-    var url = $"https://api.sky.blackbaud.com/payments/v1/transactions/{yourTransactionId}";
-
-    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", yourAccessToken);
-    client.DefaultRequestHeaders.Add("Bb-Api-Subscription-Key", Configuration.SubscriptionKey);
-
-    return await client.GetAsync(url);
+    // Do something.
 }
 ```
+
+`https://api.sky.blackbaud.com/payments/v1/transactions/{transaction_id}`
 
 ### Description:
 
@@ -38,11 +34,43 @@ Returns information about a transaction.
 
 ## POST
 
+```csharp
+var transactionAdd = new Blackbaud.PaymentsApi.TransactionAdd {
+    Amount = 1000,
+    Billing_contact = new Blackbaud.PaymentsApi.BillingInfoAdd
+    {
+        Address = "2000 Daniel Island Drive",
+        City = "Charleston",
+        Country = "US",
+        First_name = "Blackbaud",
+        Post_code = "29442",
+        State = "SC"
+    },
+    Credit_card = new Blackbaud.PaymentsApi.CreditCardAdd
+    {
+        Exp_month = 2,
+        Exp_year = 1985,
+        Name = "Donna Donor",
+        Number = "4111111111111111"
+    },
+    Csc = "123",
+    Comment = "Recurring donation",
+    Donor_ip = "192.168.0.1",
+    Payment_configuration_id = new Guid("<a valid payment configuration id>")
+};
+var transaction = await paymentsApiClient.CreateTransactionAsync(transactionAdd);
+if (transaction.State == Blackbaud.PaymentsApi.TransactionReadState.Processed)
+{
+    // Do something.
+}
+```
+
 `https://api.sky.blackbaud.com/payments/v1/transactions`
 
 ### Description:
 
 Create a transaction.
+
 
 ### Parameters
 
