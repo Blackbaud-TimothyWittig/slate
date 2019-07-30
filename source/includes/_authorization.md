@@ -23,9 +23,9 @@ using (var client = new HttpClient())
 }
 ```
 
-The first step is getting approval from a user at the organization for your application to access their data.
+<aside class="notice">Don't forget to provide the values specific to your application and account on each step!</aside>
 
-<aside class="notice">Don't forget to provide the values specific to your application.</aside>
+The first step is getting approval from a user at the organization for your application to access their data.
 
 ## Retrieve tokens
 
@@ -73,8 +73,6 @@ using (var client = new HttpClient())
 
 The second step is exchanging the authorization code for the access and refresh token.
 
-<aside class="notice">Don't forget to provide the values specific to your application.</aside>
-
 ## Refresh tokens
 
 > Refresh tokens
@@ -118,5 +116,3 @@ using (var client = new HttpClient())
 ```
 
 The third step is once your access token expires, to exchange your refresh token for a new pair of access and refresh token.
-
-<aside class="notice">Don't forget to provide the values specific to your application.</aside>
