@@ -10,6 +10,7 @@ toc_footers:
 
 includes:
   - authorization
+  - client
   - paymentconfigurations
   - transactions
   - models
